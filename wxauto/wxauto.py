@@ -27,14 +27,19 @@ class WeChat(WeChatBase):
     def __init__(
             self, 
             language: Literal['cn', 'cn_t', 'en'] = 'cn', 
-            debug: bool = False
+            debug: bool = False,
+            client: Literal['wechat', 'wecom'] = 'wechat'
         ) -> None:
         """微信UI自动化实例
 
         Args:
             language (str, optional): 微信客户端语言版本, 可选: cn简体中文  cn_t繁体中文  en英文, 默认cn, 即简体中文
+            client (str, optional): 客户端类型, wechat为个人微信, wecom为企业微信
         """
-        self.UiaAPI: uia.WindowControl = uia.WindowControl(ClassName='WeChatMainWndForPC', searchDepth=1)
+        classname = 'WeChatMainWndForPC' if client == 'wechat' else 'WWA_MainWindow'
+        self.client = client
+        self._window_class = classname
+        self.UiaAPI: uia.WindowControl = uia.WindowControl(ClassName=self._window_class, searchDepth=1)
         set_debug(debug)
         self.language = language
         # self._checkversion()
@@ -74,16 +79,16 @@ class WeChat(WeChatBase):
         print(f'初始化成功，获取到已登录窗口：{self.nickname}')
     
     def _checkversion(self):
-        self.HWND = FindWindow(classname='WeChatMainWndForPC')
+        self.HWND = FindWindow(classname=self._window_class)
         wxpath = GetPathByHwnd(self.HWND)
         wxversion = GetVersionByPath(wxpath)
         if wxversion != self.VERSION:
             Warnings.lightred(self._lang('版本不一致', 'WARNING').format(wxversion, self.VERSION), stacklevel=2)
             return False
     
-    
+
     def _show(self):
-        self.HWND = FindWindow(classname='WeChatMainWndForPC')
+        self.HWND = FindWindow(classname=self._window_class)
         win32gui.ShowWindow(self.HWND, 1)
         win32gui.SetWindowPos(self.HWND, -1, 0, 0, 0, 0, 3)
         win32gui.SetWindowPos(self.HWND, -2, 0, 0, 0, 0, 3)
