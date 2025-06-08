@@ -748,6 +748,86 @@ class WeChat(WeChatBase):
 
             NewFriendsWnd.ButtonControl(Name='确定').Click(simulateMove=False)
         return True
+
+    # ------------------------------------------------------------------
+    #  Below are experimental APIs. They are currently not implemented
+    #  but provide method stubs for requested features.  These methods
+    #  will raise ``NotImplementedError`` when called.
+    # ------------------------------------------------------------------
+
+    def SendCustomEmoji(self, filepath: str, who: str = None):
+        """Send a custom emoji image.
+
+        Args:
+            filepath: Absolute path to the image file to send as an emoji.
+            who: Optional chat name.  If ``None`` the emoji is sent to the
+                current chat window.
+        """
+        raise NotImplementedError("SendCustomEmoji is not implemented yet")
+
+    def MergeForward(self, msgs, friends):
+        """Forward several messages as a merged message."""
+        raise NotImplementedError("MergeForward is not implemented yet")
+
+    def QuoteAt(self, msg_id, users):
+        """Quote a message and @ specified users."""
+        raise NotImplementedError("QuoteAt is not implemented yet")
+
+    def AddFriendFromMessage(self, msg_id):
+        """Add a friend based on a received message."""
+        raise NotImplementedError("AddFriendFromMessage is not implemented yet")
+
+    def GetDetailFromMessage(self, msg_id):
+        """Retrieve contact details from a card message."""
+        raise NotImplementedError("GetDetailFromMessage is not implemented yet")
+
+    def GetCardMessageLink(self, msg_id):
+        """Return the link contained in a card style message."""
+        raise NotImplementedError("GetCardMessageLink is not implemented yet")
+
+    def EditRemark(self, who: str, remark: str):
+        """Edit remark of a contact."""
+        raise NotImplementedError("EditRemark is not implemented yet")
+
+    def AddTags(self, who: str, tags):
+        """Add tags to a contact."""
+        raise NotImplementedError("AddTags is not implemented yet")
+
+    def InviteToGroup(self, who: str, group: str):
+        """Invite a friend to join a group."""
+        raise NotImplementedError("InviteToGroup is not implemented yet")
+
+    def SetGroupName(self, group: str, new_name: str):
+        """Change the name of a group chat."""
+        raise NotImplementedError("SetGroupName is not implemented yet")
+
+    def SetGroupRemark(self, group: str, remark: str):
+        """Set remark/description of a group."""
+        raise NotImplementedError("SetGroupRemark is not implemented yet")
+
+    def SetGroupAnnouncement(self, group: str, announcement: str):
+        """Update group announcement."""
+        raise NotImplementedError("SetGroupAnnouncement is not implemented yet")
+
+    def SetSelfNickInGroup(self, group: str, nick: str):
+        """Change your nickname in a group chat."""
+        raise NotImplementedError("SetSelfNickInGroup is not implemented yet")
+
+    def MuteSession(self, who: str, mute: bool = True):
+        """Toggle Do-Not-Disturb for a session."""
+        raise NotImplementedError("MuteSession is not implemented yet")
+
+    def GetGroupList(self, keywords: str = None):
+        """Return a list of group chats.``keywords`` can be used to filter."""
+        raise NotImplementedError("GetGroupList is not implemented yet")
+
+    def Moments(self):
+        """Placeholder for moments related operations."""
+        raise NotImplementedError("Moments is not implemented yet")
+
+    def BackgroundMode(self, on: bool = True):
+        """Toggle running in background mode."""
+        raise NotImplementedError("BackgroundMode is not implemented yet")
     
 class WeChatFiles:
     def __init__(self, language='cn') -> None:
