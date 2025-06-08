@@ -521,7 +521,7 @@ class TextElement:
             self.sender_remark = _[0].TextControl().Name
             self.content = _[1].TextControl().Name
             self.chattype = 'group'
-            numtext = re.findall(' \(\d+\)', chatname)[-1]
+            numtext = re.findall(r' \(\d+\)', chatname)[-1]
             self.chatname = chatname[:-len(numtext)]
             
         self.info = {
@@ -597,7 +597,7 @@ class ContactWnd:
         """获取好友人数"""
         wxlog.debug('获取好友人数')
         numText = self.Sidebar.PaneControl(Name='全部').TextControl(foundIndex=2).Name
-        return int(re.findall('\d+', numText)[0])
+        return int(re.findall(r'\d+', numText)[0])
     
     def Search(self, keyword):
         """搜索好友
