@@ -88,10 +88,16 @@ class WeChat(WeChatBase):
     
 
     def _show(self):
+        """Bring the main window to the foreground."""
         self.HWND = FindWindow(classname=self._window_class)
-        win32gui.ShowWindow(self.HWND, 1)
-        win32gui.SetWindowPos(self.HWND, -1, 0, 0, 0, 0, 3)
-        win32gui.SetWindowPos(self.HWND, -2, 0, 0, 0, 0, 3)
+        if not self.HWND:
+            raise RuntimeError(f'未找到{self.client}客户端窗口')
+        try:
+            win32gui.ShowWindow(self.HWND, 1)
+            win32gui.SetWindowPos(self.HWND, -1, 0, 0, 0, 0, 3)
+            win32gui.SetWindowPos(self.HWND, -2, 0, 0, 0, 0, 3)
+        except win32gui.error as exc:  # pragma: no cover - UI only
+            raise RuntimeError('窗口句柄无效，可能未登录或客户端未运行') from exc
         self.UiaAPI.SwitchToThisWindow()
 
     def _refresh(self):
@@ -600,7 +606,7 @@ class WeChat(WeChatBase):
             chat = self.listen[who]
             msg = chat.GetNewMessage(savepic=chat.savepic, savefile=chat.savefile, savevoice=chat.savevoice)
             if msg:
-                msgs[chat] = msg
+                msgs[who] = msg
         return msgs
 
     def SwitchToContact(self):
